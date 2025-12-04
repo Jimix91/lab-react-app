@@ -5,13 +5,15 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import "./index.css";
+import ProductsList from "./components/ProductsList";
 
 function App() {
   return (
-    <div>
+    <div >
      
    <Navbar />
-   <Sidebar />   
+   <Sidebar />  
+   <ProductsList/> 
    <Footer />
     </div>
   );
