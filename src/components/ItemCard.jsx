@@ -1,22 +1,29 @@
-function ItemCard({ productDetail, onDelete }) {
+
+import { Link } from "react-router-dom";
+
+function ItemCard(props) {
 
   return (
 
     <div className="product-card">
 
-      <img src={productDetail.thumbnail} alt={productDetail.title} />
+      <img src={props.productDetail.thumbnail} alt={props.productDetail.title} />
 
-      <h3>{productDetail.title}</h3>
+      <h3>{props.productDetail.title}</h3>
 
-      <p className="price">{productDetail.price}€</p>
+      <p className="price">{props.productDetail.price}€</p>
 
-      <p> {productDetail.rating}⭐</p>
+      <p> {props.productDetail.rating}⭐</p>
 
-      {productDetail.stock > 0 
+      {props.productDetail.stock > 0 
       ? <p>✔️ In stock</p> 
       : <p>❌ Out of stock</p>}
 
-      <button onClick={() => onDelete(productDetail.id)}>Delete</button>
+      <button onClick={() => {props.onDelete(props.productDetail.id)}}>Delete</button>
+
+          <Link to={`/products/${props.productDetail.id}`}>
+              <button>Product Detail</button>
+          </Link>
     </div>
   );
 }

@@ -1,9 +1,11 @@
+import { NavLink } from "react-router-dom"
+
 function Sidebar() {
   return (
     <aside className="sidebar">
       <ul>
-        <li><a href="/">🏠 Home</a></li>
-        <li><a href="/about">ℹ️ About</a></li>
+        <NavLink to="/">🏠 Home</NavLink>
+        <NavLink to="/about">ℹ️ About</NavLink>
       </ul>
     </aside>
   );
