@@ -1,0 +1,94 @@
+
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+
+function AddProduct(props) {
+
+    const [thumbnail, setThumbnail] = useState("")
+    const [title, setTitle] = useState("")
+    const [price, setPrice] = useState("")
+    const [rating, setRating] = useState("")
+    const [stock, setStock] = useState("")
+
+    const navigate = useNavigate()
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+
+        const newProduct = {
+            thumbnail: thumbnail,
+            title: title,
+            price: price,
+            rating: rating,
+            stock: stock,
+        }
+
+        props.onCreate(newProduct)
+
+        navigate("/")
+    }
+
+    return (
+        <section className="form">
+            <form onSubmit={handleSubmit}>
+                <label >
+                    Product Image:
+                    <input
+                        type="url"
+                        name="images"
+                        placeholder="https://...."
+                        value={thumbnail}
+                        onChange={(e) => { setThumbnail(e.target.value) }}
+                    />
+                </label>
+                <label >
+                    Product Name:
+                    <input
+                        type="text"
+                        required
+                        name="title"
+                        placeholder="Lanzagranadas"
+                        value={title}
+                        onChange={(e) => { setTitle(e.target.value) }}
+                    />
+                </label>
+                <label >
+                    Price:
+                    <input
+                        type="number"
+                        name="price"
+                        placeholder="€"
+                        value={price}
+                        required
+                        onChange={(e) => { setPrice(e.target.value) }}
+                    />
+                    </label>
+                    <label >
+                        Ratings:
+                        <input
+                            type="number"
+                            name="rating"
+                            placeholder="ratings"
+                            value={rating}
+                            onChange={(e) => { setRating(e.target.value) }}
+                        />
+                        </label>
+                        <label >
+                        Stock:
+                        <input
+                            type="number"
+                            name="stock"
+                            placeholder="stock"
+                            value={stock}
+                            onChange={(e) => { setStock(e.target.value) }}
+                        />
+                        </label>
+                        <button>Add Product</button>
+                    </form>
+                    
+                </section>
+                )
+}
+
+export default AddProduct

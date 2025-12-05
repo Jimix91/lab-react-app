@@ -7,7 +7,7 @@
 .navbar {
   background-color: #222;
   color: white;
-  padding: 15px, 150px;
+ 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,9 @@
 .sidebar {
   width: 180px;
   padding: 20px;
-  background: #ececec;
+  background: #c2c1c1;
+  margin-top: 0px
+  
 }
 
 .sidebar ul {
