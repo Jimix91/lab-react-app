@@ -1,34 +1,40 @@
-import { Route, Routes } from "react-router-dom"
-import Navbar from "./components/Navbar"
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+
+import productsData from "./data/products.json";
+
+import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
+import AddProduct from "./components/AddProduct";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import "./index.css";
-import ProductsList from "./components/ProductsList";
-import { useState } from "react";
-import products from "./data/products.json";
-import ProductDetail from "./pages/ProductDetail";
-import NotFoundPage from "./pages/NotFoundPage";
-import AddProduct from "./pages/AddProduct";
-import EditProduct from "./pages/EditProduct";
+import ProductDetails from "./pages/ProductDetails";
+import ProductEdit from "./pages/ProductEdit";
+import NotFound from "./pages/NotFound";
+
+
 
 
 function App() {
+  const [products, setProducts] = useState(productsData);
 
-  const [productsToDisplay, setProductsToDisplay] = useState(products);
 
-  const deleteProducts = (productID) => {
-    const newList = productsToDisplay.filter(
-      (productCard) => productCard.id !== productID
-    );
-    setProductsToDisplay(newList);
+  const deleteProduct = (productID) => {
+    const newList = products.filter((p) => p.id !== productID);
+    setProducts(newList);
+
+    
   };
 
+
+  const addProduct = (newProduct) => {
+    setProducts([newProduct, ...products]);
+  };
   const createProduct = (productDetail) => {
-    
-    const productID = productsToDisplay.map((productObj) => {
-      return productObj.id ;
+
+    const productID = products.map((productObj) => {
+      return productObj.id;
     })
     const maxId = Math.max(...productID);
     const nextId = maxId + 1
@@ -37,50 +43,67 @@ function App() {
       ...productDetail,
       id: nextId
     }
-    const newList = [newProduct, ...productsToDisplay]
+    const newList = [newProduct, ...products]
 
-    
-    setProductsToDisplay(newList)
+
+    setProducts(newList)
   }
 
-
-
-  const updateProduct = (productDetail) => {
-    const newList = productsToDisplay.map((productObj, i, arr) => {
-      if(productObj.id === productDetail.id) {
-        return productDetail
-      } else {
-        // if the product id is different than the one we want to modify, keep the product as it is
-        return productObj        
-      }
-    })
-
-    setProductsToDisplay(newList)
-  }
-  
-
+  const updateProduct = (updatedProduct) => {
+    const updatedList = products.map((p) =>
+      p.id === updatedProduct.id ? updatedProduct : p
+    );
+    setProducts(updatedList);
+  };
 
   return (
-
-    <div >
+    <>
       <Navbar />
-      <Home />
-      <Sidebar />
-      <Routes>
-        <Route path="/" element={<ProductsList products={productsToDisplay} onDelete={deleteProducts} />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/products/:productsId" element={<ProductDetail products={productsToDisplay} />} />
-        <Route path="/addproduct" element ={<AddProduct onCreate={createProduct}/>}/>
 
-        {/* /editproduct/2 */}
-        {/* /products/:productsId/edit */}
-        <Route path="/editproduct"element ={<EditProduct products={productsToDisplay}/>} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <div className="layout">
+        <Sidebar />
+
+        <main>
+          <Routes>
+            <Route
+              path="/"
+              element={<Home
+                products={products}
+                addProduct={addProduct} />}
+            />
+            <Route
+              path="/products/:id"
+              element={
+                <ProductDetails
+                  products={products}
+                  onDelete={deleteProduct}
+                />
+              }
+            />
+
+            <Route
+              path="/addproduct"
+              element={<AddProduct
+                onCreate={createProduct} />} />
+
+            <Route
+              path="/products/:id/edit"
+              element={<ProductEdit products={products} updateProduct={updateProduct} />}
+            />
+
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+
+
+
+
+        </main>
+      </div>
+
       <Footer />
-    </div>
+    </>
   );
 }
 
-
-export default App
+export default App;

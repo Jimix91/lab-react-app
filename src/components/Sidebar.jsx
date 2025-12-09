@@ -1,16 +1,16 @@
 import { NavLink } from "react-router-dom"
-import { FaCirclePlus } from "react-icons/fa6";
-import { FaHouse } from "react-icons/fa6";
-import { FaCircleInfo } from "react-icons/fa6";
+import { FcHome } from "react-icons/fc";
+import { FcInfo } from "react-icons/fc";
+import { FcPlus } from "react-icons/fc";
 
 function Sidebar() {
   return (
     <aside className="sidebar">
-      <ul>
-        <li><NavLink to="/"><FaHouse /> Home</NavLink></li>
-        <li><NavLink to="/about"><FaCircleInfo /> About</NavLink></li>
-        <li><NavLink to="/addproduct"><FaCirclePlus /> Add New Product</NavLink></li>
-      </ul>
+      
+        <NavLink to="/"><FcHome/> Home</NavLink>
+        <NavLink to="/about"><FcInfo /> About</NavLink>
+        <NavLink to="/addproduct"><FcPlus /> Add </NavLink>
+      
     </aside>
   );
 }
